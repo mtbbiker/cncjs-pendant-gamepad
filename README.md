@@ -198,10 +198,20 @@ Finally, in `actions` you can see how `GcodeGrbl` and `GcodeMarlin` are included
 
 Supporting Smoothieware and TinyG should be priorities, and any changes to Marlin that are needed would be appreciated,.
 
-##Notes to get it working on Linux Mint 20.3
+### Notes to get it working on Linux Mint 20.3
 
 1. `gamepad_controllers.ts` was edited with new button mapping
 2. Change permissions on Arduino port `sudo chmod a+rw /dev/ttyACM0`
-3. Rebuild with `tsc`
-4. Start `cnsjs`, start `bin/cncjs-pendant-gamepad.js -p /dev/ttyACM0 -vv run` to run both
+3. Fix the `global.d.ts` Issue (WIP) on line 72
+
+```
+declare var AbortSignal: {
+    prototype: AbortSignal;
+    new(): AbortSignal;
+    abort(reason?: any): AbortSignal;
+    timeout(milliseconds: number): AbortSignal;
+};
+```
+4. Rebuild with `tsc` assuming that nvm and npm are setup correctly (`nvm use 18 && npm install)
+5. Start `cnsjs`, start `bin/cncjs-pendant-gamepad.js -p /dev/ttyACM0 -vv run` to run both
 

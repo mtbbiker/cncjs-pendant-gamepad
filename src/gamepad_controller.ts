@@ -147,16 +147,16 @@ const controllerMapping = {
       }
   },
 
-  This is a generic mapping, but it also represents a PS5 DualSense
-  controller. The controller reports "Wireless Controller", so it's what
-  we'll use when no others are detected.
-  Note that LT/RT on the PS5 triggers both an axis and a button press.
-  We could comment out one or the other, but this is our generic backup,
-  too, and we don't know what the entire other population of controllers
-  will send. If we were going to send gcode based on the triggers, then
-  we'd definitely want to choose one or the other. In this case, we're
-  going to use the triggers as a deadman switch, so it's okay if they
-  both send events.
+  // This is a generic mapping, but it also represents a PS5 DualSense
+  // controller. The controller reports "Wireless Controller", so it's what
+  // we'll use when no others are detected.
+  // Note that LT/RT on the PS5 triggers both an axis and a button press.
+  // We could comment out one or the other, but this is our generic backup,
+  // too, and we don't know what the entire other population of controllers
+  // will send. If we were going to send gcode based on the triggers, then
+  // we'd definitely want to choose one or the other. In this case, we're
+  // going to use the triggers as a deadman switch, so it's okay if they
+  // both send events.
   'Wireless Controller': {
   
     'buttons': {
@@ -398,3 +398,4 @@ export class GamepadController {
       }
     }
 }
+
