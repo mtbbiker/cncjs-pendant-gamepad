@@ -212,6 +212,6 @@ declare var AbortSignal: {
     timeout(milliseconds: number): AbortSignal;
 };
 ```
-4. Rebuild with `tsc` assuming that nvm and npm are setup correctly (`nvm use 18 && npm install)
+4. Rebuild with `tsc` assuming that nvm and npm are setup correctly (`nvm use 18 && npm install`)
 5. Start `cnsjs`, start `bin/cncjs-pendant-gamepad.js -p /dev/ttyACM0 -vv run` to run both
 
