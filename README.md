@@ -61,8 +61,8 @@ Button mapping is as shown below. It’s significantly different than the defaul
 ![Button Map](images/cncjs-pendant-gamepad.png)
 
 
-Gamepad Setup
--------------
+Gamepad Setup for Logitech Dual Action USB Controller
+-----------------------------------------------------
 
 You should ensure that your operating system is already setup to recognize and use the gamepad of your choice. Consult the internet if you need help in this regard.
 
@@ -197,3 +197,11 @@ You should also update the CLI in `console` so that you can select the new machi
 Finally, in `actions` you can see how `GcodeGrbl` and `GcodeMarlin` are included and instantiated, and do the same for your new class.
 
 Supporting Smoothieware and TinyG should be priorities, and any changes to Marlin that are needed would be appreciated,.
+
+##Notes to get it working on Linux Mint 20.3
+
+1. `gamepad_controllers.ts` was edited with new button mapping
+2. Change permissions on Arduino port `sudo chmod a+rw /dev/ttyACM0`
+3. Rebuild with `tsc`
+4. Start `cnsjs`, start `bin/cncjs-pendant-gamepad.js -p /dev/ttyACM0 -vv run` to run both
+

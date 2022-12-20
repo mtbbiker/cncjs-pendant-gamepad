@@ -33,6 +33,35 @@ const LOGPREFIX = 'GAMEPAD  '; // keep at 9 digits for consistency
 //------------------------------------------------------------------------------
 const controllerMapping = {
 
+  // This is the mapping for a Logitech 
+  'Logitech Gamepad': {
+  
+    'buttons': {
+      '0':  'KEYCODE_BUTTON_A',
+      '1':  'KEYCODE_BUTTON_B',
+      '2':  'KEYCODE_BUTTON_X',
+      '3':  'KEYCODE_BUTTON_Y',
+      '4':  'KEYCODE_BUTTON_L1',
+      '5':  'KEYCODE_BUTTON_R1',
+      '6':  'KEYCODE_BUTTON_L2',
+      '7':  'KEYCODE_BUTTON_R2',
+      '8':  'KEYCODE_HOME',
+      '9':  'KEYCODE_BUTTON_START',
+      '10': 'KEYCODE_BUTTON_THUMBL',
+      '11': 'KEYCODE_BUTTON_THUMBR'  
+    },
+    
+    'axes': {
+      '0': 'AXIS_X',
+      '1': 'AXIS_Y',
+      '2': 'AXIS_Z',      
+      '3': 'AXIS_RZ',
+      '4': 'AXIS_HAT_X',
+      '5': 'AXIS_HAT_Y'  
+    }
+  },
+
+
   // This is the mapping for a Logitech F710 when it's in X mode. This is
   // supposedly the same as an Xbox controller, so it might be a good starting
   // point when we have a real one to test.
@@ -118,16 +147,16 @@ const controllerMapping = {
       }
   },
 
-  // This is a generic mapping, but it also represents a PS5 DualSense
-  // controller. The controller reports "Wireless Controller", so it's what
-  // we'll use when no others are detected.
-  // Note that LT/RT on the PS5 triggers both an axis and a button press.
-  // We could comment out one or the other, but this is our generic backup,
-  // too, and we don't know what the entire other population of controllers
-  // will send. If we were going to send gcode based on the triggers, then
-  // we'd definitely want to choose one or the other. In this case, we're
-  // going to use the triggers as a deadman switch, so it's okay if they
-  // both send events.
+  This is a generic mapping, but it also represents a PS5 DualSense
+  controller. The controller reports "Wireless Controller", so it's what
+  we'll use when no others are detected.
+  Note that LT/RT on the PS5 triggers both an axis and a button press.
+  We could comment out one or the other, but this is our generic backup,
+  too, and we don't know what the entire other population of controllers
+  will send. If we were going to send gcode based on the triggers, then
+  we'd definitely want to choose one or the other. In this case, we're
+  going to use the triggers as a deadman switch, so it's okay if they
+  both send events.
   'Wireless Controller': {
   
     'buttons': {
@@ -253,11 +282,12 @@ export class GamepadController {
     // find deviceAtIndex(n) where deviceID = id. I don't have an array o
     // of devices, though, so I have to query each one until I find it.
     deviceIndexForID(id: number) {
+      //log.info(LOGPREFIX, 'gamepad.numDevices', `${this.gamepad.numDevices}`);
       for (let i = 0; i < this.gamepad.numDevices; i++) {
         if (this.gamepad.deviceAtIndex(i).deviceID == id)
           return i;
       }
-      return undefined;
+      return 0; //ET Note, 
     }
 
     // Transform the generic structure provided by Gamepad.h into a hash with
@@ -301,10 +331,12 @@ export class GamepadController {
     }
  
     gamepadEventAttach(id: number, state: GamepadState) {
+      log.info(LOGPREFIX, `State for my Devices ${state.description} (id ${state.deviceID})`);
+
       if (controllerMapping[state.description])
         this.mappings[id] = controllerMapping[state.description];
       else
-        this.mappings[id] = controllerMapping['Wireless Controller'];
+        this.mappings[id] = controllerMapping['Logitech Gamepad'];
 
       this.connected = true;
       const deviceState = this.deviceStateForID(id);
